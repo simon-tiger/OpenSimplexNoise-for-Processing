@@ -21,7 +21,7 @@ public class OpenSimplexNoise {
 	
 	OpenSimplexNoiseKS generator;
 
-	int myVariable = 0;
+	long seed;
 	
 	public final static String VERSION = "##library.prettyVersion##";
 	
@@ -30,7 +30,8 @@ public class OpenSimplexNoise {
 	 * a Constructor, usually called in the setup() method in your sketch to
 	 * initialize and start the Library.
 	 * 
-	 * @example Hello
+	 * @example OSNoise1D
+	 * @example OSNoise2D
 	 * @param theParent the parent PApplet
 	 */
 	public OpenSimplexNoise(PApplet theParent) {
@@ -40,9 +41,9 @@ public class OpenSimplexNoise {
 	public OpenSimplexNoise(PApplet theParent, long seed) {
 		myParent = theParent;
 		welcome();
+		setSeed(seed);
 		generator = new OpenSimplexNoiseKS(seed);
 	}
-	
 	
 	private void welcome() {
 		System.out.println("##library.name## ##library.prettyVersion## by ##author##");
@@ -51,21 +52,28 @@ public class OpenSimplexNoise {
 	private double remap(double val) {
 		return (val + 1) * 0.5;
 	}
-
 	
-	public float noise (float xoff) {
+	public long getSeed() {
+		return seed;
+	}
+	
+	public void setSeed(long val) {
+		seed = val;
+	}
+	
+	public float noise(float xoff) {
 		return this.noise(xoff, 0);
 	}
 
-	public float noise (float xoff, float yoff) {
+	public float noise(float xoff, float yoff) {
 		return (float) remap(generator.eval(xoff, yoff));
 	}
 	
-	public float noise (float xoff, float yoff, float zoff) {
+	public float noise(float xoff, float yoff, float zoff) {
 		return (float) remap(generator.eval(xoff, yoff, zoff));
 	}
 	
-	public float noise (float xoff, float yoff, float zoff, float uoff) {
+	public float noise(float xoff, float yoff, float zoff, float uoff) {
 		return (float) remap(generator.eval(xoff, yoff, zoff, uoff));
 	}
 	
